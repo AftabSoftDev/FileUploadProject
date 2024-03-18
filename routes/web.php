@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [CommonController::class, 'getUserData'])->name('dashboard');
     Route::view('/file-upload', 'fileUpload')->name('file');
-    Route::post('/file-uploading', [CommonController::class, 'fileUpload'])->name('file-upload');
+    Route::post('/file-uploading', [CommonController::class, 'fileUpload'])->name('file-uploads');
 });
 
 Route::middleware('auth')->group(function () {

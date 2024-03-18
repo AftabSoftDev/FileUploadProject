@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
          <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-   <script type="module" src="{{url('asset/common.js')}}"></script>
+  
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
