@@ -28,18 +28,18 @@
     <button type="submit" class="btn btn-primary mb-4 float-right" name="submit">Upload</button>
 </form>
 <div class="progress" id="progress">
-    <div class="progress-bar" role="progressbar" id="upload-progress" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+    <div class="progress-bar" role="progressbar" id="upload-progress" >0%</div>
 </div>
                 </div>
             </div>
         </div>
     </div>
-     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/resumable.js/1.1.0/resumable.min.js"></script>
+
     
 <script>
    document.getElementById('resumable-browse').addEventListener('change', function(event) {
     var file = event.target.files[0];
-    var chunkSize = 1024 * 1024; // 1 MB chunk size
+    var chunkSize = 1024 * 1024; 
     var chunks = Math.ceil(file.size / chunkSize);
 
     for (let i = 0; i < chunks; i++) {
@@ -61,7 +61,6 @@ function readAndProcessChunk(chunk, chunkIndex, totalChunks) {
 }
 
 function uploadCsvChunk(csvData, chunkIndex, totalChunks) {
-    // Send CSV chunk data to the backend using fetch or jQuery AJAX
     fetch("{{ route('file-uploads') }}", {
         method: 'POST',
         headers: {
@@ -76,7 +75,7 @@ function uploadCsvChunk(csvData, chunkIndex, totalChunks) {
     })
     .then(response => response.json())
     .then(data => {
-        // console.log('CSV chunk processed successfully:', data);
+        console.error('Error processing CSV chunk:', error);
         var progress = ((chunkIndex + 1) / totalChunks) * 100;
         updateProgressBar(progress);
     })
@@ -85,7 +84,6 @@ function uploadCsvChunk(csvData, chunkIndex, totalChunks) {
     });
 }
 function updateProgressBar(progress) {
-    // Update progress bar UI here
     
     document.getElementById('progress').style.display = "block";
     document.getElementById('upload-progress').style.width = progress + '%';

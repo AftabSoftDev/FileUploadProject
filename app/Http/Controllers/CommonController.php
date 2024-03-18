@@ -15,7 +15,8 @@ class CommonController extends Controller
     }
     function fileUpload(Request $request)
     {
-        set_time_limit(600);
+        set_time_limit(1800);
+        try {
         if ($csvData = $request->input('csvData')) {
             $chunkIndex = $request->input('chunkIndex');
             $totalChunks = $request->input('totalChunks');
@@ -36,8 +37,14 @@ class CommonController extends Controller
                     'estim_emp' => $chunk[9],
                 ]);
             }
+                return response()->json(['success' => true, 'message' => 'CSV chunk processed successfully']);
+            } else {
+                return response()->json(['success' => false, 'error' => 'CSV data is missing'], 400);
+            }
+        } catch (\Exception $e) {
+            return $e;
+            // return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
-        return response()->json(['success' => true]);
     }
 
 }
