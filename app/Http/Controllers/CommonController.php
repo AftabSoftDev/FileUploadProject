@@ -7,11 +7,15 @@ use App\Models\User;
 
 class CommonController extends Controller
 {
-    function getUserData(Request $requset)
+    function getUserData()
+    {
+        $userData = User::all();
+        return  view('dashboard', compact('userData'));
+    }
+    function fileUpload(Request $requset)
     {
 
-        $userData = User::all();
-
-        return  view('dashboard', compact('userData'));
+        return $requset->all();
+      
     }
 }
