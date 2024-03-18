@@ -14,8 +14,12 @@ class CommonController extends Controller
     }
     function fileUpload(Request $requset)
     {
-
-        return $requset->all();
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            $handle = fopen($filePath, "r");
+            $header = true;
+       
       
     }
 }

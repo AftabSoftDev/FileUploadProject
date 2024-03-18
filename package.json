@@ -14,5 +14,9 @@
         "postcss": "^8.4.6",
         "tailwindcss": "^3.1.0",
         "vite": "^4.5.2"
+    },
+    "dependencies": {
+        "resumable": "^0.0.1-1",
+        "resumablejs": "^1.1.0"
     }
 }
