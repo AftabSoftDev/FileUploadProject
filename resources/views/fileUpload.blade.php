@@ -75,6 +75,7 @@ function uploadCsvChunk(csvData, chunkIndex, totalChunks) {
     })
     .then(response => response.json())
     .then(data => {
+   
         console.error('Error processing CSV chunk:', error);
         var progress = ((chunkIndex + 1) / totalChunks) * 100;
         updateProgressBar(progress);
@@ -86,8 +87,9 @@ function uploadCsvChunk(csvData, chunkIndex, totalChunks) {
 function updateProgressBar(progress) {
     
     document.getElementById('progress').style.display = "block";
-    document.getElementById('upload-progress').style.width = progress + '%';
+    document.getElementById('upload-progress').style.width = progress;
     document.getElementById('upload-progress').innerText = progress + '%';
+    console.log(progress);
 }
 </script>
 </x-app-layout>

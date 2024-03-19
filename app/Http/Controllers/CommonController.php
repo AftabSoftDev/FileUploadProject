@@ -16,6 +16,7 @@ class CommonController extends Controller
     function fileUpload(Request $request)
     {
         set_time_limit(1800);
+        ini_set('memory_limit', '1200M');
         try {
         if ($csvData = $request->input('csvData')) {
             $chunkIndex = $request->input('chunkIndex');
@@ -24,26 +25,41 @@ class CommonController extends Controller
 
             foreach ($lines as $line) {
                 $chunk = str_getcsv($line);
-                DB::table('file_records')->insert([
-                    'company_id' => $chunk[0],
-                    'name' => $chunk[1],
-                    'domain' => $chunk[2],
-                    'industry' => $chunk[3],
-                    'size_range' => $chunk[4],
-                    'locality' => $chunk[5],
-                    'country' => $chunk[6],
-                    'linkedin_url' => $chunk[7],
-                    'curr_emp' => $chunk[8],
-                    'estim_emp' => $chunk[9],
+
+                    $com_id = isset($chunk[0]) ? $chunk[0] :
+                        'NA';
+                    $name = isset($chunk[1]) ? $chunk[1] : 'NA';
+                    $domain = isset($chunk[2]) ? $chunk[2] : 'NA';
+                    $industry = isset($chunk[3]) ? $chunk[3] : 'NA';
+                    $size_range = isset($chunk[4]) ? $chunk[4] : 'NA';
+                    $locality = isset($chunk[5]) ? $chunk[5] : 'NA';
+                    $country = isset($chunk[6]) ? $chunk[6] : 'NA';
+                    $linkedin_url = isset($chunk[7]) ? $chunk[7] : 'NA';
+                    $curr_emp = isset($chunk[8]) ? $chunk[8] : 'NA';
+                    $estim_emp = isset($chunk[9]) ? $chunk[9] : 'NA';
+
+
+
+                    DB::table('file_records')->insert(['company_id' => $com_id,
+                        'name' => $name,
+                        'domain' => $domain,
+                        'industry' => $industry,
+                        'size_range' => $size_range,
+                        'locality' => $locality,
+                        'country' => $country,
+                        'linkedin_url' => $linkedin_url,
+                        'curr_emp' => $curr_emp,
+                        'estim_emp' => $estim_emp,
                 ]);
             }
-                return response()->json(['success' => true, 'message' => 'CSV chunk processed successfully']);
+                return response()->json(['success' => true, 'message' => 'CSV chunk processed successfully'], 200);
             } else {
                 return response()->json(['success' => false, 'error' => 'CSV data is missing'], 400);
             }
         } catch (\Exception $e) {
-            return $e;
-            // return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+
+            echo $e;
+            return response()->json(['success' => false, 'error' => $e->getMessage()], 400);
         }
     }
 
